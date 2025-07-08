@@ -1,0 +1,1 @@
+../platformplugin_factory.cpp

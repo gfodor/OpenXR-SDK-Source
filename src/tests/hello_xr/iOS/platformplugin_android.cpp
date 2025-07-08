@@ -1,0 +1,1 @@
+../platformplugin_android.cpp

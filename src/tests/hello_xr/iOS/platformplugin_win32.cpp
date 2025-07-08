@@ -1,0 +1,1 @@
+../platformplugin_win32.cpp
