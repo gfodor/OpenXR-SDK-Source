@@ -10,6 +10,10 @@
 #include "graphicsplugin.h"
 #include "openxr_program.h"
 
+#ifdef XR_USE_PLATFORM_IOS
+#include <Foundation/Foundation.h>
+#endif
+
 #if defined(_WIN32)
 // Favor the high performance NVIDIA or AMD GPUs
 extern "C" {
@@ -109,11 +113,25 @@ bool UpdateOptionsFromCommandLine(Options& options, int argc, char* argv[]) {
         }
     }
 
-    // Check for required parameters.
+    // Set default graphics plugin if not specified
     if (options.GraphicsPlugin.empty()) {
+#if defined(DEFAULT_GRAPHICS_PLUGIN_OPENGLES)
+        options.GraphicsPlugin = "OpenGLES";
+#elif defined(DEFAULT_GRAPHICS_PLUGIN_VULKAN)
+        options.GraphicsPlugin = "Vulkan";
+#elif defined(DEFAULT_GRAPHICS_PLUGIN_METAL)
+        options.GraphicsPlugin = "Metal";
+#elif defined(DEFAULT_GRAPHICS_PLUGIN_D3D11)
+        options.GraphicsPlugin = "D3D11";
+#elif defined(DEFAULT_GRAPHICS_PLUGIN_D3D12)
+        options.GraphicsPlugin = "D3D12";
+#elif defined(DEFAULT_GRAPHICS_PLUGIN_OPENGL)
+        options.GraphicsPlugin = "OpenGL";
+#else
         Log::Write(Log::Level::Error, "GraphicsPlugin parameter is required");
         ShowHelp();
         return false;
+#endif
     }
 
     try {
@@ -290,6 +308,15 @@ void android_main(struct android_app* app) {
 #else
 int main(int argc, char* argv[]) {
     try {
+        // Set OpenXR runtime environment variable for iOS
+#ifdef XR_USE_PLATFORM_IOS
+        // Get the main bundle path and set runtime JSON path
+        NSBundle* mainBundle = [NSBundle mainBundle];
+        NSString* bundlePath = [mainBundle resourcePath];
+        NSString* runtimeJsonPath = [bundlePath stringByAppendingPathComponent:@"runtime.json"];
+        setenv("XR_RUNTIME_JSON", [runtimeJsonPath UTF8String], 1);
+#endif
+        
         // Parse command-line arguments into Options.
         std::shared_ptr<Options> options = std::make_shared<Options>();
         if (!UpdateOptionsFromCommandLine(*options, argc, argv)) {

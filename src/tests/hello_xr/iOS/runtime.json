@@ -1,0 +1,6 @@
+{
+    "file_format_version": "1.0.0",
+    "runtime": {
+        "library_path": "@executable_path/Frameworks/libopenxr_monado.dylib"
+    }
+}

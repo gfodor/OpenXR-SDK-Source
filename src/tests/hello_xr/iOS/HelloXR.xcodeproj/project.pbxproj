@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 101 /* main.cpp */; };
+		001 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 101 /* main.mm */; };
 		002 /* openxr_program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 102 /* openxr_program.cpp */; };
 		003 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 103 /* logger.cpp */; };
 		004 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 104 /* pch.cpp */; };
@@ -17,7 +17,7 @@
 		008 /* graphicsplugin_vulkan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 108 /* graphicsplugin_vulkan.cpp */; };
 		009 /* platformplugin_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 109 /* platformplugin_factory.cpp */; };
 		010 /* platformplugin_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 110 /* platformplugin_posix.cpp */; };
-		011 /* libopenxr_monado_unified.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 201 /* libopenxr_monado_unified.a */; };
+		011 /* libopenxr_monado.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 201 /* libopenxr_monado.dylib */; };
 		012 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 301 /* ARKit.framework */; };
 		013 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 302 /* Metal.framework */; };
 		014 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 303 /* MetalKit.framework */; };
@@ -26,24 +26,41 @@
 		017 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306 /* CoreMotion.framework */; };
 		018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307 /* Foundation.framework */; };
 		019 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308 /* UIKit.framework */; };
-		020 /* libMoltenVK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 309 /* libMoltenVK.a */; };
 		021 /* libopenxr_loader.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 310 /* libopenxr_loader.dylib */; };
 		022 /* IOSurface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 311 /* IOSurface.framework */; };
 		023 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312 /* CoreGraphics.framework */; };
+		024 /* libopenxr_loader.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 310 /* libopenxr_loader.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		025 /* libopenxr_monado.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 201 /* libopenxr_monado.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		026 /* runtime.json in Resources */ = {isa = PBXBuildFile; fileRef = 402 /* runtime.json */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1801 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				024 /* libopenxr_loader.dylib in Embed Libraries */,
+				025 /* libopenxr_monado.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		101 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = main.cpp; sourceTree = "<group>"; };
-		102 /* openxr_program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = openxr_program.cpp; path = openxr_program.cpp; sourceTree = "<group>"; };
-		103 /* logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = logger.cpp; path = logger.cpp; sourceTree = "<group>"; };
-		104 /* pch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = pch.cpp; sourceTree = "<group>"; };
-		105 /* graphicsplugin_factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicsplugin_factory.cpp; path = graphicsplugin_factory.cpp; sourceTree = "<group>"; };
-		106 /* graphicsplugin_metal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicsplugin_metal.cpp; path = graphicsplugin_metal.cpp; sourceTree = "<group>"; };
-		107 /* graphicsplugin_opengles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicsplugin_opengles.cpp; path = graphicsplugin_opengles.cpp; sourceTree = "<group>"; };
-		108 /* graphicsplugin_vulkan.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicsplugin_vulkan.cpp; path = graphicsplugin_vulkan.cpp; sourceTree = "<group>"; };
-		109 /* platformplugin_factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = platformplugin_factory.cpp; path = platformplugin_factory.cpp; sourceTree = "<group>"; };
-		110 /* platformplugin_posix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = platformplugin_posix.cpp; path = platformplugin_posix.cpp; sourceTree = "<group>"; };
-		201 /* libopenxr_monado_unified.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopenxr_monado_unified.a; path = libopenxr_monado_unified.a; sourceTree = "<group>"; };
+		101 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		102 /* openxr_program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = openxr_program.cpp; sourceTree = "<group>"; };
+		103 /* logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = logger.cpp; sourceTree = "<group>"; };
+		104 /* pch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
+		105 /* graphicsplugin_factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsplugin_factory.cpp; sourceTree = "<group>"; };
+		106 /* graphicsplugin_metal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsplugin_metal.cpp; sourceTree = "<group>"; };
+		107 /* graphicsplugin_opengles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsplugin_opengles.cpp; sourceTree = "<group>"; };
+		108 /* graphicsplugin_vulkan.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsplugin_vulkan.cpp; sourceTree = "<group>"; };
+		109 /* platformplugin_factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platformplugin_factory.cpp; sourceTree = "<group>"; };
+		110 /* platformplugin_posix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platformplugin_posix.cpp; sourceTree = "<group>"; };
+		201 /* libopenxr_monado.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopenxr_monado.dylib; sourceTree = "<group>"; };
 		301 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		302 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		303 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -52,11 +69,12 @@
 		306 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		307 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		308 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		309 /* libMoltenVK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMoltenVK.a; path = "$(PROJECT_DIR)/../../../../external/MoltenVK/MoltenVK/static/MoltenVK.xcframework/ios-arm64/libMoltenVK.a"; sourceTree = "<absolute>"; };
+		309 /* libMoltenVK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMoltenVK.a; path = "../../../../external/MoltenVK/MoltenVK/static/MoltenVK.xcframework/ios-arm64/libMoltenVK.a"; sourceTree = "<group>"; };
 		310 /* libopenxr_loader.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopenxr_loader.dylib; path = libopenxr_loader.dylib; sourceTree = "<group>"; };
 		311 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = System/Library/Frameworks/IOSurface.framework; sourceTree = SDKROOT; };
 		312 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		401 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		402 /* runtime.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = runtime.json; sourceTree = "<group>"; };
 		501 /* HelloXR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloXR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				011 /* libopenxr_monado_unified.a in Frameworks */,
+				011 /* libopenxr_monado.dylib in Frameworks */,
 				012 /* ARKit.framework in Frameworks */,
 				013 /* Metal.framework in Frameworks */,
 				014 /* MetalKit.framework in Frameworks */,
@@ -74,7 +92,6 @@
 				017 /* CoreMotion.framework in Frameworks */,
 				018 /* Foundation.framework in Frameworks */,
 				019 /* UIKit.framework in Frameworks */,
-				020 /* libMoltenVK.a in Frameworks */,
 				021 /* libopenxr_loader.dylib in Frameworks */,
 				022 /* IOSurface.framework in Frameworks */,
 				023 /* CoreGraphics.framework in Frameworks */,
@@ -84,19 +101,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				501 /* HelloXR.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		701 = {
 			isa = PBXGroup;
 			children = (
-				801 /* HelloXR */,
+				801,
 				901 /* Frameworks */,
 				1001 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		801 /* HelloXR */ = {
+		801 = {
 			isa = PBXGroup;
 			children = (
-				101 /* main.cpp */,
+				101 /* main.mm */,
 				102 /* openxr_program.cpp */,
 				103 /* logger.cpp */,
 				104 /* pch.cpp */,
@@ -107,13 +132,14 @@
 				109 /* platformplugin_factory.cpp */,
 				110 /* platformplugin_posix.cpp */,
 				401 /* Info.plist */,
+				402 /* runtime.json */,
 			);
 			sourceTree = "<group>";
 		};
 		901 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				201 /* libopenxr_monado_unified.a */,
+				201 /* libopenxr_monado.dylib */,
 				301 /* ARKit.framework */,
 				302 /* Metal.framework */,
 				303 /* MetalKit.framework */,
@@ -130,14 +156,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1001 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				501 /* HelloXR.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,6 +166,7 @@
 				1301 /* Sources */,
 				601 /* Frameworks */,
 				1401 /* Resources */,
+				1801 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -195,7 +214,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-					);
+				026 /* runtime.json in Resources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
@@ -205,7 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				001 /* main.cpp in Sources */,
+				001 /* main.mm in Sources */,
 				002 /* openxr_program.cpp in Sources */,
 				003 /* logger.cpp in Sources */,
 				004 /* pch.cpp in Sources */,
@@ -342,51 +362,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development: Gregory Fodorjr (2DUY6XQ2MG)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				CODE_SIGN_IDENTITY = "";
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.khronos.openxr.HelloXR;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../../..",
-					"$(PROJECT_DIR)/../../../common",
-					"$(PROJECT_DIR)/../../../external/metal-cpp",
-					"$(PROJECT_DIR)/../../../external/include",
-					"$(PROJECT_DIR)/../../../..",
-					"$(PROJECT_DIR)/../../../../include",
-					"$(PROJECT_DIR)/../../../../external/include",
-					"$(PROJECT_DIR)/../../../../build/include",
-					"$(PROJECT_DIR)/../../../../build/include/openxr",
-					"$(PROJECT_DIR)/../../../../external/MoltenVK/MoltenVK/include",
-					"/opt/homebrew/Cellar/vulkan-headers/1.4.320/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../../../build/src/loader",
-					"$(PROJECT_DIR)/../../../../external/MoltenVK/MoltenVK/static/MoltenVK.xcframework/ios-arm64",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-std=c++17",
-				);
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP2BLK3Y72;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -395,19 +375,20 @@
 					"XR_USE_GRAPHICS_API_VULKAN=1",
 					"DEFAULT_GRAPHICS_PLUGIN_VULKAN=1",
 				);
-			};
-			name = Debug;
-		};
-		1604 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				CODE_SIGN_IDENTITY = "";
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../..",
+					"$(SRCROOT)/../../../common",
+					"$(SRCROOT)/../../../external/metal-cpp",
+					"$(SRCROOT)/../../../external/include",
+					"$(SRCROOT)/../../../..",
+					"$(SRCROOT)/../../../../include",
+					"$(SRCROOT)/../../../../external/include",
+					"$(SRCROOT)/../../../../build/include",
+					"$(SRCROOT)/../../../../build/include/openxr",
+					"/opt/homebrew/Cellar/vulkan-headers/1.4.320/include",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -419,35 +400,35 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.khronos.openxr.HelloXR;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../../..",
-					"$(PROJECT_DIR)/../../../common",
-					"$(PROJECT_DIR)/../../../external/metal-cpp",
-					"$(PROJECT_DIR)/../../../external/include",
-					"$(PROJECT_DIR)/../../../..",
-					"$(PROJECT_DIR)/../../../../include",
-					"$(PROJECT_DIR)/../../../../external/include",
-					"$(PROJECT_DIR)/../../../../build/include",
-					"$(PROJECT_DIR)/../../../../build/include/openxr",
-					"$(PROJECT_DIR)/../../../../external/MoltenVK/MoltenVK/include",
-					"/opt/homebrew/Cellar/vulkan-headers/1.4.320/include",
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../../../build/src/loader",
-					"$(PROJECT_DIR)/../../../../external/MoltenVK/MoltenVK/static/MoltenVK.xcframework/ios-arm64",
+					"$(SRCROOT)",
+					"$(SRCROOT)/../../../../build/src/loader",
 				);
+				MARKETING_VERSION = 1.0;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-std=c++17",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.khronos.openxr.HelloXR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "helloxr-2";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development: Gregory Fodorjr (2DUY6XQ2MG)";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP2BLK3Y72;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"XR_USE_PLATFORM_IOS=1",
@@ -455,6 +436,47 @@
 					"XR_USE_GRAPHICS_API_VULKAN=1",
 					"DEFAULT_GRAPHICS_PLUGIN_VULKAN=1",
 				);
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../..",
+					"$(SRCROOT)/../../../common",
+					"$(SRCROOT)/../../../external/metal-cpp",
+					"$(SRCROOT)/../../../external/include",
+					"$(SRCROOT)/../../../..",
+					"$(SRCROOT)/../../../../include",
+					"$(SRCROOT)/../../../../external/include",
+					"$(SRCROOT)/../../../../build/include",
+					"$(SRCROOT)/../../../../build/include/openxr",
+					"/opt/homebrew/Cellar/vulkan-headers/1.4.320/include",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/../../../../build/src/loader",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-std=c++17",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.khronos.openxr.HelloXR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "helloxr-2";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
