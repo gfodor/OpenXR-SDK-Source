@@ -1329,10 +1329,33 @@ struct VulkanGraphicsPlugin : public IGraphicsPlugin {
     }
 
     void InitializeDevice(XrInstance instance, XrSystemId systemId) override {
+        // Add diagnostic logging for iOS OpenXR system initialization
+        Log::Write(Log::Level::Info, Fmt("InitializeDevice called with instance=%p, systemId=%llu", 
+                                         (void*)instance, (unsigned long long)systemId));
+        
+        if (instance == XR_NULL_HANDLE) {
+            Log::Write(Log::Level::Error, "OpenXR instance is XR_NULL_HANDLE");
+            return;
+        }
+        
+        if (systemId == XR_NULL_SYSTEM_ID) {
+            Log::Write(Log::Level::Error, "OpenXR systemId is XR_NULL_SYSTEM_ID");
+            return;
+        }
+        
+        Log::Write(Log::Level::Info, "OpenXR instance and systemId appear valid, proceeding with device initialization");
+        
         // Create the Vulkan device for the adapter associated with the system.
         // Extension function must be loaded by name
         XrGraphicsRequirementsVulkan2KHR graphicsRequirements{XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN2_KHR};
-        CHECK_XRCMD(GetVulkanGraphicsRequirements2KHR(instance, systemId, &graphicsRequirements));
+        Log::Write(Log::Level::Info, "Calling GetVulkanGraphicsRequirements2KHR");
+        XrResult result = GetVulkanGraphicsRequirements2KHR(instance, systemId, &graphicsRequirements);
+        if (XR_FAILED(result)) {
+            Log::Write(Log::Level::Error, Fmt("GetVulkanGraphicsRequirements2KHR failed with result: %d", result));
+        } else {
+            Log::Write(Log::Level::Info, "GetVulkanGraphicsRequirements2KHR succeeded");
+        }
+        CHECK_XRCMD(result);
 
         VkResult err;
 
@@ -1421,6 +1444,15 @@ struct VulkanGraphicsPlugin : public IGraphicsPlugin {
         XrVulkanGraphicsDeviceGetInfoKHR deviceGetInfo{XR_TYPE_VULKAN_GRAPHICS_DEVICE_GET_INFO_KHR};
         deviceGetInfo.systemId = systemId;
         deviceGetInfo.vulkanInstance = m_vkInstance;
+
+        // Verify the instance is not null
+        if (m_vkInstance == VK_NULL_HANDLE) {
+            Log::Write(Log::Level::Error, "Vulkan instance is null after CreateVulkanInstanceKHR");
+            THROW("Failed to create Vulkan instance");
+        } else {
+          Log::Write(Log::Level::Info, "Vulkan instance created successfully");
+        }
+
         CHECK_XRCMD(GetVulkanGraphicsDevice2KHR(instance, &deviceGetInfo, &m_vkPhysicalDevice));
 
         VkDeviceQueueCreateInfo queueInfo{VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO};
