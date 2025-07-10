@@ -357,21 +357,32 @@ int main(int argc, char* argv[]) {
             program->InitializeSession();
             program->CreateSwapchains();
 
-            while (!quitKeyPressed) {
+            Log::Write(Log::Level::Info, "Entering main polling loop");
+            while (true) {
                 bool exitRenderLoop = false;
+                Log::Write(Log::Level::Verbose, "About to call PollEvents");
                 program->PollEvents(&exitRenderLoop, &requestRestart);
+                
                 if (exitRenderLoop) {
+                    Log::Write(Log::Level::Info, "Exit render loop flag set, breaking from main loop");
                     break;
                 }
 
+                if (requestRestart) {
+                    Log::Write(Log::Level::Info, "Restart requested flag set");
+                }
+
                 if (program->IsSessionRunning()) {
+                    Log::Write(Log::Level::Verbose, "Session is running, polling actions and rendering frame");
                     program->PollActions();
                     program->RenderFrame();
                 } else {
+                    Log::Write(Log::Level::Info, "Session is not running, throttling loop");
                     // Throttle loop since xrWaitFrame won't be called.
                     std::this_thread::sleep_for(std::chrono::milliseconds(250));
                 }
             }
+            Log::Write(Log::Level::Info, "Exited main polling loop - quitKeyPressed: " + std::string(quitKeyPressed ? "true" : "false"));
 
         } while (!quitKeyPressed && requestRestart);
 
