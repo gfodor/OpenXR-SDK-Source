@@ -19,6 +19,7 @@
 #include "runtime_interface.hpp"
 #include "xr_generated_dispatch_table_core.h"
 #include "xr_generated_loader.hpp"
+#include "loader_init_data.hpp"
 
 #include <openxr/openxr.h>
 #include <openxr/openxr_loader_negotiation.h>
@@ -117,6 +118,16 @@ class InstanceCreateInfoManager {
         return Update();
     }
 
+    // Add the extension named in the parameter and return a pointer to the current state.
+    const XrInstanceCreateInfo* AddExtension(const char* extension_to_add) {
+        auto it = std::find_if(enabled_extensions_cstr.begin(), enabled_extensions_cstr.end(),
+                               [&](const char* extension) { return strcmp(extension_to_add, extension) == 0; });
+        if (it == enabled_extensions_cstr.end()) {
+            enabled_extensions_cstr.push_back(extension_to_add);
+        }
+        return Update();
+    }
+
     // Get the current modified XrInstanceCreateInfo
     const XrInstanceCreateInfo* Get() const { return &modified_create_info; }
 
@@ -195,6 +206,40 @@ XrResult LoaderInstance::CreateInstance(PFN_xrGetInstanceProcAddr get_instance_p
             }
             modified_create_info = create_info_manager.FilterOutExtensions(extensions_to_skip);
         }
+
+        // Inject XR_KHR_android_create_instance if not already present
+
+        LoaderLogger::LogInfoMessage("xrCreateInstance", "LOG A");
+#if defined(XR_USE_PLATFORM_ANDROID) && defined(XR_KHR_LOADER_INIT_SUPPORT)
+        bool has_android_ext = false;
+        for (uint32_t i = 0; i < modified_create_info->enabledExtensionCount; ++i) {
+            if (strcmp(modified_create_info->enabledExtensionNames[i], XR_KHR_ANDROID_CREATE_INSTANCE_EXTENSION_NAME) == 0) {
+                has_android_ext = true;
+                LoaderLogger::LogInfoMessage("xrCreateInstance", "LOG B");
+                break;
+            }
+        }
+
+        LoaderLogger::LogInfoMessage("xrCreateInstance", "LOG C");
+        XrInstanceCreateInfoAndroidKHR android_create_info{XR_TYPE_INSTANCE_CREATE_INFO_ANDROID_KHR, nullptr};
+        XrInstanceCreateInfo final_create_info{};
+        if (!has_android_ext) {
+            LoaderLogger::LogInfoMessage("xrCreateInstance", "LOG D");
+            modified_create_info = create_info_manager.AddExtension(XR_KHR_ANDROID_CREATE_INSTANCE_EXTENSION_NAME);
+            final_create_info = *modified_create_info;
+            const auto& initData = LoaderInitData::instance().getData();
+            android_create_info.applicationVM = initData.applicationVM;
+            android_create_info.applicationActivity = initData.applicationContext;
+
+            if (initData.applicationVM == nullptr || initData.applicationContext == nullptr) {
+              LoaderLogger::LogInfoMessage("xrCreateInstance", "LOG E");
+            }
+
+            android_create_info.next = final_create_info.next;
+            final_create_info.next = &android_create_info;
+            modified_create_info = &final_create_info;
+        }
+#endif  // defined(XR_USE_PLATFORM_ANDROID) && defined(XR_KHR_LOADER_INIT_SUPPORT)
 
         // Only start the xrCreateApiLayerInstance stack if we have layers.
         if (!api_layer_interfaces.empty()) {
